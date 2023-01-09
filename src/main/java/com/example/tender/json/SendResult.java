@@ -1,4 +1,5 @@
-package com.example.tender.json;// Author - Orifjon Yunusjonov
+package com.example.tender.json;
+// Author - Orifjon Yunusjonov
 // t.me/coderr24
 
 import lombok.AllArgsConstructor;
