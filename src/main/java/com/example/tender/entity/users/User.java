@@ -1,5 +1,6 @@
 package com.example.tender.entity.users;
 
+import com.example.tender.entity.Interest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +9,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "users")
@@ -29,6 +28,29 @@ public class User {
 
     @OneToOne
     private Parent parent;
+
+    @Column(nullable = false,unique = true)
+    String phoneNumber;
+
+    @Column(nullable = false)
+    String firstName;
+    @Column(nullable = false)
+    String lastName;
+
+    @Column(nullable = false)
+    String aboutMe;
+
+    @Column(nullable = false)
+    Date birthDay;
+
+//    true-> male , false -> female
+    boolean gender;
+
+    double lon;
+    double lat;
+
+    @ElementCollection
+    List<Interest> interests;
 
     @CreationTimestamp
     Date createdAt;

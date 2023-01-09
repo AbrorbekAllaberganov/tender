@@ -1,16 +1,16 @@
 package com.example.tender.config;
 
-import uz.abror.myproject.config.cors.CORSFilter;
-import uz.abror.myproject.config.cors.CustomCorsFilter;
-import uz.abror.myproject.security.JwtAuthenticationEntryPoint;
-import uz.abror.myproject.security.JwtConfigurer;
-import uz.abror.myproject.security.JwtTokenProvider;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.filter.CorsFilter;
+import com.example.tender.config.cors.CORSFilter;
+import com.example.tender.config.cors.CustomCorsFilter;
+import com.example.tender.security.JwtAuthenticationEntryPoint;
+import com.example.tender.security.JwtConfigurer;
+import com.example.tender.security.JwtTokenProvider;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

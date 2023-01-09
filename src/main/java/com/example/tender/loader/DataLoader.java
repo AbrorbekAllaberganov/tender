@@ -1,17 +1,17 @@
 package com.example.tender.loader;
 
-import uz.abror.myproject.entity.users.Admin;
-import uz.abror.myproject.entity.users.Parent;
-import uz.abror.myproject.entity.users.Role;
-import uz.abror.myproject.repository.AdminRepository;
-import uz.abror.myproject.repository.ParentRepository;
-import uz.abror.myproject.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import com.example.tender.entity.users.Admin;
+import com.example.tender.entity.users.Parent;
+import com.example.tender.entity.users.Role;
+import com.example.tender.repository.AdminRepository;
+import com.example.tender.repository.ParentRepository;
+import com.example.tender.repository.RoleRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class DataLoader implements CommandLineRunner {
-        @Value("${spring.jpa.hibernate.ddl-auto}")
-        private String init;
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String init;
 
     private final RoleRepository roleRepository;
     private final AdminRepository adminRepository;
@@ -51,10 +51,8 @@ public class DataLoader implements CommandLineRunner {
                 Admin admin = new Admin();
                 Parent parent = new Parent();
                 parent.setRoles(new ArrayList<>(Collections.singletonList(roleRepository.findByName("ROLE_ADMIN"))));
-                parent.setUserName("admin");
                 parent.setPassword(passwordEncoder.encode("111"));
-                parent.setFullName("Abror Allaberganov");
-                parent.setPhoneNumber("+998977777777");
+                parent.setPhoneNumber("998977777777");
                 parentRepository.save(parent);
                 admin.setParent(parent);
 

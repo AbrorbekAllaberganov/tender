@@ -29,7 +29,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("uz.abror.myproject.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.tender.controller"))
                 .paths(regex("/.*"))
                 .build()
                 .securityContexts(Collections.singletonList(securityContext()))

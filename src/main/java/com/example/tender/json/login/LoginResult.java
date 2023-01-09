@@ -1,4 +1,4 @@
-package com.example.demo.json.login;
+package com.example.tender.json.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

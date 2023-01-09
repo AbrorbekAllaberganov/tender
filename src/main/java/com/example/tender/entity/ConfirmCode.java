@@ -1,4 +1,4 @@
-package com.example.demo.entity.sms;
+package com.example.tender.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

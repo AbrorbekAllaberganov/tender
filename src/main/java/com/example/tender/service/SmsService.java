@@ -1,15 +1,16 @@
-package com.example.demo.service;
+package com.example.tender.service;
 
-import com.example.demo.entity.sms.ConfirmCode;
-import com.example.demo.entity.superEntity.Parent;
-import com.example.demo.entity.users.User;
-import com.example.demo.json.login.LoginResult;
-import com.example.demo.payload.Result;
-import com.example.demo.repository.ConfirmCodeRepository;
-import com.example.demo.repository.userRepository.UserRepository;
-import com.example.demo.security.JwtTokenProvider;
-import com.example.demo.security.SmsConstant;
+import com.example.tender.entity.ConfirmCode;
+import com.example.tender.entity.users.Parent;
+import com.example.tender.entity.users.User;
+import com.example.tender.json.login.LoginResult;
+import com.example.tender.payload.Result;
+import com.example.tender.repository.ConfirmCodeRepository;
+import com.example.tender.repository.UserRepository;
+import com.example.tender.security.JwtTokenProvider;
+import com.example.tender.security.SmsConstant;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -33,78 +34,56 @@ import java.util.Random;
 @Configuration
 @EnableScheduling
 @Service
+@Slf4j
 public class SmsService {
     private final ConfirmCodeRepository confirmCodeRepository;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
-    private final UserService userService;
-    private final Logger logger= LoggerFactory.getLogger(SmsService.class);
 
     public ResponseEntity<?> checkCode(String phoneNumber, String code) {
         ConfirmCode confirmCode = confirmCodeRepository.findByPhoneNumber(phoneNumber);
         Date now = new Date();
         if (now.getTime() - confirmCode.getCreatAt().getTime() <= 120000) {
+            confirmCodeRepository.delete(confirmCode);
             if (code.equals(confirmCode.getCode())) {
-                confirmCodeRepository.delete(confirmCode);
-                User user=userService.savePhone(phoneNumber);
-
-                Parent parent=user.getParent();
-
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(parent.getUserName(), parent.getPhoneNumber()));
-                String token = jwtTokenProvider.createToken(parent.getUserName(), parent.getRoles());
-
-                if (token == null) {
-                    return new ResponseEntity("Xatolik", HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-
-                Map<String, Object> login = new HashMap<>();
-                login.put("token", token);
-                login.put("username", parent.getUserName());
-                login.put("success", true);
-                login.put("data",parent);
-
-                return ResponseEntity.ok(login);
-
+                return ResponseEntity.ok(new Result("success", true));
             } else {
-                confirmCodeRepository.delete(confirmCode);
-                return ResponseEntity.ok(new Result("Code error",false));
+                return ResponseEntity.ok(new Result("Code isn't correct", false));
             }
         }
-
-        return ResponseEntity.ok(new Result("Time out", false));
+        return ResponseEntity.ok(new Result("code expired", false));
     }
-//,initialDelay = 1000L
-    @Scheduled(fixedDelay = 36000000L,initialDelay = 1000L)
-    public void getToken(){
-        RestTemplate restTemplate=new RestTemplate();
-        String url="https://notify.eskiz.uz/api/auth/login";
-        Map<String,String>params=new HashMap<>();
-        params.put("email","test@eskiz.uz");
-        params.put("password","j6DWtQjjpLDNjWEk74Sx");
-        ResponseEntity<LoginResult>res=restTemplate.postForEntity(url,params,LoginResult.class);
+
+    //,initialDelay = 1000L
+    @Scheduled(fixedDelay = 36000000L, initialDelay = 1000L)
+    public void getToken() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://notify.eskiz.uz/api/auth/login";
+        Map<String, String> params = new HashMap<>();
+        params.put("email", "test@eskiz.uz");
+        params.put("password", "j6DWtQjjpLDNjWEk74Sx");
+        ResponseEntity<LoginResult> res = restTemplate.postForEntity(url, params, LoginResult.class);
 
         SmsConstant.setToken(res.getBody().getData().getToken());
     }
 
-    public Result sendSms(String phoneNumber){
-        String url="https://notify.eskiz.uz/api/message/sms/send";
-        String code=GetPassword();
-        RestTemplate restTemplate=new RestTemplate();
-        Map<String,String> params=new HashMap<>();
-        params.put("mobile_phone",phoneNumber);
-        params.put("message","Kod : "+code);
-        params.put("from","4546");
-        params.put("callback_url","http://0000.uz/test.php");
+    public Result sendSms(String phoneNumber) {
+        String url = "https://notify.eskiz.uz/api/message/sms/send";
+        String code = GetPassword();
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile_phone", phoneNumber);
+        params.put("message", "Kod : " + code);
+        params.put("from", "4546");
+        params.put("callback_url", "http://0000.uz/test.php");
 
-        HttpHeaders headers=new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(SmsConstant.getToken());
 
-        HttpEntity<?>req=new HttpEntity<>(params,headers);
+        HttpEntity<?> req = new HttpEntity<>(params, headers);
+        System.out.println(code);
 
-        ResponseEntity<String>res=restTemplate.postForEntity(url,req,String.class);
+//        ResponseEntity<String> res = restTemplate.postForEntity(url, req, String.class);
         try {
-            if(confirmCodeRepository.findByPhoneNumber(phoneNumber)!=null)
+            if (confirmCodeRepository.findByPhoneNumber(phoneNumber) != null)
                 confirmCodeRepository.delete(confirmCodeRepository.findByPhoneNumber(phoneNumber));
 
             ConfirmCode confirmCode = new ConfirmCode();
@@ -113,12 +92,12 @@ public class SmsService {
 
             confirmCodeRepository.save(confirmCode);
 
-            return new Result("success",true,confirmCode);
-        }catch (Exception e){
-            logger.error(e.getMessage());
+            return new Result("success", true, confirmCode);
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
 
-        return new Result("error",false);
+        return new Result("error", false);
     }
 
     public static String GetPassword() {

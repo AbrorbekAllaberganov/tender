@@ -1,8 +1,6 @@
 package com.example.tender.security;
 
 
-import uz.abror.myproject.entity.users.Parent;
-import uz.abror.myproject.repository.ParentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import com.example.tender.entity.users.Parent;
+import com.example.tender.repository.ParentRepository;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ public class CustomUserDetailes implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Parent parent= parentRepository.findByUserName(s);
+        Parent parent= parentRepository.findByPhoneNumber(s);
 
         return new UserDetails() {
             @Override
@@ -37,7 +37,7 @@ public class CustomUserDetailes implements UserDetailsService {
 
             @Override
             public String getUsername() {
-                return parent.getUserName();
+                return parent.getPhoneNumber();
             }
 
             @Override

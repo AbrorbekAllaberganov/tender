@@ -1,8 +1,5 @@
 package com.example.tender.controller;
 
-import uz.abror.myproject.entity.MyFile;
-import uz.abror.myproject.payload.Result;
-import uz.abror.myproject.service.MyFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.tender.entity.MyFile;
+import com.example.tender.payload.Result;
+import com.example.tender.service.MyFileService;
 
 import java.net.MalformedURLException;
 import java.net.URLEncoder;

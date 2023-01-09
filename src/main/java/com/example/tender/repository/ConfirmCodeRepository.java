@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.tender.repository;
 
-import com.example.demo.entity.sms.ConfirmCode;
+import com.example.tender.entity.ConfirmCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

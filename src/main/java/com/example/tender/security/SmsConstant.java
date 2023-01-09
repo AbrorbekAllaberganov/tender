@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.tender.security;
 
 public class SmsConstant {
     private static String token;

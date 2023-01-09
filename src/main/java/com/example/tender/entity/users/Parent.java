@@ -25,8 +25,6 @@ public class Parent implements Serializable {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     protected UUID id;
 
-    private String fullName;
-    private String userName;
     private String password;
     private String phoneNumber;
 

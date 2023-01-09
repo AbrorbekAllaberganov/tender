@@ -1,8 +1,8 @@
 package com.example.tender.repository;
 
-import uz.abror.myproject.entity.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.example.tender.entity.users.User;
 
 import java.util.UUID;
 

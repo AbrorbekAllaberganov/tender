@@ -1,9 +1,5 @@
 package com.example.tender.service;
 
-import uz.abror.myproject.entity.MyFile;
-import uz.abror.myproject.exceptions.BadRequest;
-import uz.abror.myproject.payload.Result;
-import uz.abror.myproject.repository.MyFileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -11,6 +7,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.tender.entity.MyFile;
+import com.example.tender.exceptions.BadRequest;
+import com.example.tender.payload.Result;
+import com.example.tender.repository.MyFileRepository;
 
 import java.io.File;
 import java.io.IOException;
