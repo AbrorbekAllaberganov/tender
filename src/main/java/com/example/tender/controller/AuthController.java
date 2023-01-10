@@ -15,13 +15,14 @@ import com.example.tender.payload.LoginPayload;
 import com.example.tender.repository.ParentRepository;
 import com.example.tender.security.JwtTokenProvider;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin(value = "*",maxAge = 3600L)
+@CrossOrigin(value = "*", maxAge = 3600L)
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
@@ -48,20 +49,22 @@ public class AuthController {
     }
 
     @GetMapping("/send-sms/{phoneNumber}")
-    public ResponseEntity<?> sendSms(@PathVariable("phoneNumber")String phoneNumber){
-        Result result=smsService.sendSms(phoneNumber);
+    public ResponseEntity<?> sendSms(@PathVariable("phoneNumber") String phoneNumber) {
+        Result result = smsService.sendSms(phoneNumber);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/check-sms")
-    public ResponseEntity<?> checkSmsCode(@RequestParam("phoneNumber")String phoneNumber,
-                                          @RequestParam("code")String code){
-        return smsService.checkCode(phoneNumber,code);
+    public ResponseEntity<?> checkSmsCode(@RequestParam("phoneNumber") String phoneNumber,
+                                          @RequestParam("code") String code) {
+        return smsService.checkCode(phoneNumber, code);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Result> saveUser(@RequestBody UserPayload userPayload) {
+    public ResponseEntity<Result> saveUser(@RequestBody @Valid UserPayload userPayload) {
         Result result = userService.saveUser(userPayload);
-        return ResponseEntity.status(result.isStatus() ? 200 : 400).body(result);
+        return ResponseEntity
+                .status(result.isStatus() ? 200 : 400)
+                .body(result);
     }
 }

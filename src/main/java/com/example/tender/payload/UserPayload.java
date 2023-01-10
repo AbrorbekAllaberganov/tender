@@ -1,6 +1,7 @@
 package com.example.tender.payload;
 
 import com.example.tender.entity.Interest;
+import com.example.tender.enums.Language;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.ElementCollection;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -17,15 +19,32 @@ import java.util.List;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserPayload {
+    @NotNull(message = "Password required!")
     String password;
-    String phoneNumber;
-    String firstName;
-    String lastName;
-    String aboutMe;
-    Date birthDay;
-    List<String> interests;
-    boolean gender;
-    double lon;
-    double lat;
 
+    @NotNull(message = "PhoneNumber required!")
+    String phoneNumber;
+
+    @NotNull(message = "FirstName required!")
+    String firstName;
+
+    @NotNull(message = "LastName required!")
+    String lastName;
+
+    @NotNull(message = "About required!")
+    String aboutMe;
+
+    String photoId;
+
+    Language language;
+
+    Date birthDay;
+
+    List<String> interests;
+
+    boolean gender;
+
+    double lon;
+
+    double lat;
 }

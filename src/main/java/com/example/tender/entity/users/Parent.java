@@ -26,6 +26,7 @@ public class Parent implements Serializable {
     protected UUID id;
 
     private String password;
+
     private String phoneNumber;
 
     @ManyToMany(fetch = FetchType.EAGER)

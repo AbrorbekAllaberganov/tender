@@ -1,6 +1,8 @@
 package com.example.tender.entity.users;
 
 import com.example.tender.entity.Interest;
+import com.example.tender.entity.MyFile;
+import com.example.tender.enums.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,7 @@ public class User {
 
     @Column(nullable = false)
     String firstName;
+
     @Column(nullable = false)
     String lastName;
 
@@ -49,6 +52,16 @@ public class User {
     double lon;
 
     double lat;
+
+    @Column(name = "photo_id")
+    private String photoId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id", insertable = false, updatable = false)
+    private MyFile photo;
+
+    @Enumerated(EnumType.STRING)
+    Language lang;
 
     @ElementCollection
     List<Interest> interests;

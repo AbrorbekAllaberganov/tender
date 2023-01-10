@@ -33,8 +33,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-
         try {
             if (init.equalsIgnoreCase("create")) {
                 Role roleUser = new Role();

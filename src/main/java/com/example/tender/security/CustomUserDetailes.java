@@ -22,7 +22,7 @@ public class CustomUserDetailes implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Parent parent= parentRepository.findByPhoneNumber(s);
+        Parent parent = parentRepository.findByPhoneNumber(s);
 
         return new UserDetails() {
             @Override

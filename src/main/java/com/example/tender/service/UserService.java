@@ -28,6 +28,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final ParentRepository parentRepository;
+    private final MyFileService myFileService;
 
     public Interest getInterest(String interest) {
         switch (interest) {
@@ -71,6 +72,8 @@ public class UserService {
 
     public Result saveUser(UserPayload userPayload) {
         try {
+            myFileService.findByHashId(userPayload.getPhotoId());
+
             User user = new User();
 
             Parent parent = new Parent();
@@ -78,7 +81,8 @@ public class UserService {
             parent.setPhoneNumber(userPayload.getPhoneNumber());
             parent.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
             parentRepository.save(parent);
-
+            user.setLang(userPayload.getLanguage());
+            user.setPhotoId(user.getPhotoId());
             user.setParent(parent);
             user.setFirstName(userPayload.getFirstName());
             user.setLastName(userPayload.getLastName());
@@ -134,11 +138,11 @@ public class UserService {
         }
     }
 
-    public Result deleteUser(UUID userId){
+    public Result deleteUser(UUID userId) {
         try {
             userRepository.deleteById(userId);
-            return Result.message("user deleted",true);
-        }catch (Exception e){
+            return Result.message("user deleted", true);
+        } catch (Exception e) {
             return Result.error(e);
         }
     }
@@ -156,16 +160,16 @@ public class UserService {
         }
     }
 
-    public Result changeLocation(UUID userId,long lon,long lat){
+    public Result changeLocation(UUID userId, long lon, long lat) {
         try {
-            User user=userRepository.findById(userId).orElseThrow(
-                    ()->new ResourceNotFound("user","id",userId)
+            User user = userRepository.findById(userId).orElseThrow(
+                    () -> new ResourceNotFound("user", "id", userId)
             );
             user.setLon(lon);
             user.setLat(lat);
             userRepository.save(user);
             return Result.success(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.error(e);
         }
     }

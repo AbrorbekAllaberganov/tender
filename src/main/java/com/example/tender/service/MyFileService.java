@@ -82,7 +82,8 @@ public class MyFileService {
     }
 
     public MyFile findByHashId(String hashId) {
-        return repository.findByHashId(hashId);
+        return repository.findByHashId(hashId)
+                .orElseThrow(()->{throw new BadRequest("File not found!");});
     }
 
     public Result delete(String hashId){
