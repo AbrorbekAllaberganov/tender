@@ -1,0 +1,16 @@
+###
+POST http://localhost:8081/api/auth/register
+Content-Type: application/json
+
+{
+  "lastName": "Mukhtarov",
+  "firstName": "Sarvar",
+  "aboutMe": "I am Sarvar",
+  "password": "1234",
+  "phoneNumber": "+998330030528",
+  "interests": ["Education","Language"],
+  "birthDay": "29-10-2003",
+  "gender": true,
+  "lon": 41.1,
+  "lat": 63.1
+}

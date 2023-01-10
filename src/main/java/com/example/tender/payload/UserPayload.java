@@ -1,6 +1,7 @@
 package com.example.tender.payload;
 
 import com.example.tender.entity.Interest;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

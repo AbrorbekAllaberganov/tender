@@ -29,7 +29,7 @@ public class User {
     @OneToOne
     private Parent parent;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     String phoneNumber;
 
     @Column(nullable = false)
@@ -43,10 +43,11 @@ public class User {
     @Column(nullable = false)
     Date birthDay;
 
-//    true-> male , false -> female
+    //    true-> male , false -> female
     boolean gender;
 
     double lon;
+
     double lat;
 
     @ElementCollection
