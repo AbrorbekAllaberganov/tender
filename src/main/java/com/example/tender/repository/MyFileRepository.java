@@ -9,11 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MyFileRepository extends JpaRepository<MyFile, UUID> {
+public interface MyFileRepository extends JpaRepository<MyFile, String> {
     boolean deleteByHashId(String hashId);
 
     Optional<MyFile> findByHashId(String hashId);
 
-    @Query(value ="select f.hash_id from my_file" ,nativeQuery = true)
+    @Query(value ="select f.hash_id from my_file as f" ,nativeQuery = true)
     Page<String> getHashId(Pageable pageable);
 }

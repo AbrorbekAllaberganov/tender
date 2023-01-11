@@ -68,7 +68,7 @@ public class MyFileService {
             // copy bytes into new file or saving into storage
             multipartFile.transferTo(new File(file.getAbsolutePath() + "/" + String.format("%s.%s", myFile.getHashId(), myFile.getExtension())));
             Map<Object, Object> data = new HashMap<>();
-            data.put("hashId", myFile.getHashId());
+            data.put("id", myFile.getId());
             return new Result("File successfully saved!", true, data);
 
         } catch (IOException e) {
@@ -85,7 +85,10 @@ public class MyFileService {
         return repository.findByHashId(hashId)
                 .orElseThrow(()->{throw new BadRequest("File not found!");});
     }
-
+    public MyFile findById(String id) {
+        return repository.findById(id)
+                .orElseThrow(()->{throw new BadRequest("File not found!");});
+    }
     public Result delete(String hashId){
         MyFile myFile = findByHashId(hashId);
 

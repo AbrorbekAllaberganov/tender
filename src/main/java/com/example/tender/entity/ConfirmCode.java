@@ -20,10 +20,9 @@ import java.util.UUID;
 @Data
 public class ConfirmCode implements Serializable {
     @Id
-    @Type(type = "org.hibernate.type.PostgresUUIDType")
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     private String phoneNumber;
     private String code;

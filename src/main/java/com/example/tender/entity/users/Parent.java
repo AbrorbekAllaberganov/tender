@@ -20,10 +20,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Parent implements Serializable {
     @Id
-    @Type(type = "org.hibernate.type.PostgresUUIDType")
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    protected UUID id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     private String password;
 

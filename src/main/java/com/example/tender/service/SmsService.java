@@ -57,9 +57,11 @@ public class SmsService {
     public void getToken() {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://notify.eskiz.uz/api/auth/login";
+
         Map<String, String> params = new HashMap<>();
         params.put("email", "test@eskiz.uz");
         params.put("password", "j6DWtQjjpLDNjWEk74Sx");
+
         ResponseEntity<LoginResult> res = restTemplate.postForEntity(url, params, LoginResult.class);
 
         SmsConstant.setToken(res.getBody().getData().getToken());

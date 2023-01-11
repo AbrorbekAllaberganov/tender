@@ -8,7 +8,6 @@ import com.example.tender.entity.users.Parent;
 import java.util.UUID;
 
 @Repository
-public interface ParentRepository extends JpaRepository<Parent, UUID> {
+public interface ParentRepository extends JpaRepository<Parent, String> {
     Parent findByPhoneNumber (String phoneNumber);
-
 }

@@ -1,4 +1,4 @@
-###
+### R E G I S T E R
 POST http://localhost:8081/api/auth/register
 Content-Type: application/json
 
@@ -9,8 +9,19 @@ Content-Type: application/json
   "password": "1234",
   "phoneNumber": "+998330030528",
   "interests": ["Education","Language"],
-  "birthDay": "29-10-2003",
+  "birthDay": "2003-10-29",
+  "photoId": "4028800485a084f30185a0853cdf0000",
   "gender": true,
+  "language": "uz",
   "lon": 41.1,
   "lat": 63.1
+}
+
+### L O G I N
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+
+{
+  "phoneNumber": "+998330030528",
+  "password": "123"
 }

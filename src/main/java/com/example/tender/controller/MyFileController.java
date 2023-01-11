@@ -24,7 +24,6 @@ public class MyFileController {
     @PostMapping("/auth/file/save")
     public ResponseEntity<?> saveFile(@RequestParam(name = "file") MultipartFile multipartFile) {
         Result result = myFileService.save(multipartFile);
-        System.out.println(result);
         return ResponseEntity.status(result.isStatus() ? 200 : 409).body(result);
     }
 

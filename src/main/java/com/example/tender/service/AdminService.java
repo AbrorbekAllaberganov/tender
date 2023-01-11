@@ -18,7 +18,7 @@ public class AdminService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Result editAdmin(UUID adminId, AdminRequest adminRequest) {
+    public Result editAdmin(String adminId, AdminRequest adminRequest) {
         try {
             Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new ResourceNotFound("admin", "id", adminId));
             Parent parent = admin.getParent();

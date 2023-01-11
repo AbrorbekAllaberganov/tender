@@ -10,11 +10,11 @@ import com.example.tender.entity.users.Admin;
 import java.util.UUID;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, UUID> {
+public interface AdminRepository extends JpaRepository<Admin, String> {
 
-    @Query(value = "select * from admin a\n" +
-            "inner join parent p on a.parent_id=p.id\n" +
-            "where p.user_name=:USERNAME",nativeQuery = true)
+    @Query(value = "select * from admin a " +
+            "inner join parent p on a.parent_id=p.id " +
+            "where p.user_name= :USERNAME ",nativeQuery = true)
     Admin getAdminByUsername(@Param("USERNAME")String username);
 
 }

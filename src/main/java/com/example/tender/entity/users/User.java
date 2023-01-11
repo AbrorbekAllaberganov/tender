@@ -3,18 +3,18 @@ package com.example.tender.entity.users;
 import com.example.tender.entity.Interest;
 import com.example.tender.entity.MyFile;
 import com.example.tender.enums.Language;
+import com.example.tender.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Entity(name = "users")
 @AllArgsConstructor
@@ -23,10 +23,9 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @Type(type = "org.hibernate.type.PostgresUUIDType")
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    protected UUID id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     @OneToOne
     private Parent parent;
@@ -63,7 +62,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     Language lang;
 
+    @Enumerated(EnumType.STRING)
+    UserStatus status;
+
+    LocalDateTime lastOnline;
+
     @ElementCollection
+    @Enumerated(EnumType.STRING)
     List<Interest> interests;
 
     @CreationTimestamp

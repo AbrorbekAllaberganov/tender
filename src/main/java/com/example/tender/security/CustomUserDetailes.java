@@ -23,7 +23,6 @@ public class CustomUserDetailes implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Parent parent = parentRepository.findByPhoneNumber(s);
-
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -32,7 +31,7 @@ public class CustomUserDetailes implements UserDetailsService {
 
             @Override
             public String getPassword() {
-                return parent.getPassword();
+                return null;
             }
 
             @Override

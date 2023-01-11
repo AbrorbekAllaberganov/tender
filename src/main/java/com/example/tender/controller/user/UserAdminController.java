@@ -21,7 +21,7 @@ public class UserAdminController {
     }
 
     @DeleteMapping("/delete-user/{id}")
-    public ResponseEntity<Result> deleteUserById(@PathVariable UUID id) {
+    public ResponseEntity<Result> deleteUserById(@PathVariable String id) {
         Result result = userService.delete(id);
         return ResponseEntity.status(result.isStatus() ? 200 : 400).body(result);
     }

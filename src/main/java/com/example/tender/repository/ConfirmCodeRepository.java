@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ConfirmCodeRepository extends JpaRepository<ConfirmCode, UUID> {
+public interface ConfirmCodeRepository extends JpaRepository<ConfirmCode, String> {
     ConfirmCode findByPhoneNumber (String phoneNumber);
 }

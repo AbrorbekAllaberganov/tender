@@ -1,0 +1,9 @@
+### Upload Windows
+POST http://localhost:8081/api/auth/file/save
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="zor.jpg"
+
+< C:\Users\Admin\Pictures\black.jpg
+--WebAppBoundary--
