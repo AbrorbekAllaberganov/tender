@@ -62,9 +62,9 @@ public class SmsService {
         params.put("email", "test@eskiz.uz");
         params.put("password", "j6DWtQjjpLDNjWEk74Sx");
 
-        ResponseEntity<LoginResult> res = restTemplate.postForEntity(url, params, LoginResult.class);
+//        ResponseEntity<LoginResult> res = restTemplate.postForEntity(url, params, LoginResult.class);
 
-        SmsConstant.setToken(res.getBody().getData().getToken());
+//        SmsConstant.setToken(res.getBody().getData().getToken());
     }
 
     public Result sendSms(String phoneNumber) {

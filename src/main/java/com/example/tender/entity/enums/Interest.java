@@ -1,4 +1,4 @@
-package com.example.tender.entity;
+package com.example.tender.entity.enums;
 
 public enum Interest {
     Education,

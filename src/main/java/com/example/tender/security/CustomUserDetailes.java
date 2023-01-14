@@ -31,7 +31,7 @@ public class CustomUserDetailes implements UserDetailsService {
 
             @Override
             public String getPassword() {
-                return null;
+                return parent.getPassword();
             }
 
             @Override

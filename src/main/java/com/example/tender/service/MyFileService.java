@@ -1,5 +1,6 @@
 package com.example.tender.service;
 
+import com.example.tender.exceptions.ResourceNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -83,28 +84,30 @@ public class MyFileService {
 
     public MyFile findByHashId(String hashId) {
         return repository.findByHashId(hashId)
-                .orElseThrow(()->{throw new BadRequest("File not found!");});
+                .orElseThrow(() -> new ResourceNotFound("File", "hashId", hashId));
     }
+
     public MyFile findById(String id) {
         return repository.findById(id)
-                .orElseThrow(()->{throw new BadRequest("File not found!");});
+                .orElseThrow(() -> new ResourceNotFound("File", "id", id));
     }
-    public Result delete(String hashId){
+
+    public Result delete(String hashId) {
         MyFile myFile = findByHashId(hashId);
 
         File file = new File(String.format("%s/%s.%s", myFile.getUploadPath(), myFile.getHashId(), myFile.getExtension()));
 
         if (file.delete() && repository.deleteByHashId(hashId)) {
-            return new Result("success",true);
+            return new Result("success", true);
 
         } else {
-            return new Result("error",false);
+            return new Result("error", false);
         }
 
     }
 
-    public Page<String> getHashId(int page,int size){
-        Pageable pageable= PageRequest.of(page,size);
+    public Page<String> getHashId(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return repository.getHashId(pageable);
     }
 

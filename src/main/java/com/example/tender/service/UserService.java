@@ -1,9 +1,9 @@
 package com.example.tender.service;
 
-import com.example.tender.entity.Interest;
+import com.example.tender.entity.enums.Interest;
 import com.example.tender.entity.users.Parent;
 import com.example.tender.entity.users.User;
-import com.example.tender.enums.UserStatus;
+import com.example.tender.entity.enums.UserStatus;
 import com.example.tender.exceptions.BadRequest;
 import com.example.tender.exceptions.ResourceNotFound;
 import com.example.tender.payload.Result;
@@ -139,15 +139,6 @@ public class UserService {
             userRepository.save(user);
 
             return Result.success(user);
-        } catch (Exception e) {
-            return Result.error(e);
-        }
-    }
-
-    public Result deleteUser(String userId) {
-        try {
-            userRepository.deleteById(userId);
-            return Result.message("user deleted", true);
         } catch (Exception e) {
             return Result.error(e);
         }

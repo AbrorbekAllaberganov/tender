@@ -1,15 +1,12 @@
 package com.example.tender.payload;
 
-import com.example.tender.entity.Interest;
-import com.example.tender.enums.Language;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.tender.entity.enums.Language;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.ElementCollection;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;

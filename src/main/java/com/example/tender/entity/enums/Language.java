@@ -1,4 +1,4 @@
-package com.example.tender.enums;
+package com.example.tender.entity.enums;
 
 /**
  * @author 'Mukhtarov Sarvarbek' on 10.01.2023

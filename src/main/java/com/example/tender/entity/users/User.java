@@ -1,9 +1,9 @@
 package com.example.tender.entity.users;
 
-import com.example.tender.entity.Interest;
+import com.example.tender.entity.enums.Interest;
 import com.example.tender.entity.MyFile;
-import com.example.tender.enums.Language;
-import com.example.tender.enums.UserStatus;
+import com.example.tender.entity.enums.Language;
+import com.example.tender.entity.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -55,7 +55,8 @@ public class User {
     @Column(name = "photo_id")
     private String photoId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+//    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "photo_id", insertable = false, updatable = false)
     private MyFile photo;
 

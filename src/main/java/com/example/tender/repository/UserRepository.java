@@ -1,6 +1,6 @@
 package com.example.tender.repository;
 
-import com.example.tender.enums.UserStatus;
+import com.example.tender.entity.enums.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +9,6 @@ import com.example.tender.entity.users.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
