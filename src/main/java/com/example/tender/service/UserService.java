@@ -239,7 +239,7 @@ public class UserService {
 
     private UserFilterResponse toResponseFilter(User user) {
         UserFilterResponse response = new UserFilterResponse();
-        response.setAge(new Date(new Date().getTime() - user.getBirthDay().getTime()).getYear());
+        response.setAge(new Date().getYear() - user.getBirthDay().getYear());
         response.setId(user.getId());
         response.setPhoto(new FileForResponse(user.getPhotoId(), myFileService.toOpenUrl(user.getPhoto())));
         response.setLastName(user.getLastName());

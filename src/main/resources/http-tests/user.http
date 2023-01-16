@@ -10,5 +10,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTgzMzAwMzA1MjYiLCJyb2xlc
 Content-Type: application/json
 
 {
-  "distance": 10
+  "distance": 5
 }
