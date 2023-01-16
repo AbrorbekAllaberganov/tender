@@ -1,7 +1,7 @@
 package com.example.tender.controller;
 
-import com.example.tender.payload.Result;
-import com.example.tender.payload.UserPayload;
+import com.example.tender.payload.response.Result;
+import com.example.tender.payload.request.user.UserPayload;
 import com.example.tender.service.SmsService;
 import com.example.tender.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import com.example.tender.entity.users.Parent;
-import com.example.tender.payload.LoginPayload;
+import com.example.tender.payload.request.LoginPayload;
 import com.example.tender.repository.ParentRepository;
 import com.example.tender.security.JwtTokenProvider;
 

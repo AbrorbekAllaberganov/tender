@@ -1,25 +1,35 @@
 package com.example.tender.service;
 
 import com.example.tender.entity.enums.Interest;
+import com.example.tender.entity.enums.UserStatus;
 import com.example.tender.entity.users.Parent;
 import com.example.tender.entity.users.User;
-import com.example.tender.entity.enums.UserStatus;
 import com.example.tender.exceptions.BadRequest;
 import com.example.tender.exceptions.ResourceNotFound;
-import com.example.tender.payload.Result;
-import com.example.tender.payload.UserPayload;
+import com.example.tender.mapper.user.UserMapper;
+import com.example.tender.payload.detail.FileForResponse;
+import com.example.tender.payload.request.user.UserInterestFilterPayload;
+import com.example.tender.payload.request.user.UserPayload;
+import com.example.tender.payload.response.Result;
+import com.example.tender.payload.response.UserFilterResponse;
 import com.example.tender.repository.ParentRepository;
 import com.example.tender.repository.RoleRepository;
 import com.example.tender.repository.UserRepository;
+import com.example.tender.repository.filter.UserFilterRepository;
 import com.example.tender.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,6 +38,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final UserFilterRepository userFilterRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final ParentRepository parentRepository;
@@ -186,11 +197,53 @@ public class UserService {
                 case ONLINE:
                     userRepository.updateStatus(user.getId(), status);
             }
-
-
             return Result.success(status);
         } catch (Exception e) {
             return Result.error(e);
         }
+    }
+
+    private User findByPhone(String phone) {
+        return userRepository.findByParent_PhoneNumber(phone).orElseThrow(() -> {
+            throw new BadRequest("User not found");
+        });
+    }
+
+    public PageImpl<UserFilterResponse> findInterests(UserInterestFilterPayload payload, int size, int page) {
+
+        Optional<String> currentUser = securityUtils.getCurrentUser();
+
+        if (!currentUser.isPresent())
+            throw new BadRequest("User not found!");
+
+        User user = findByPhone(currentUser.get());
+
+        List<String> interests = user.getInterests()
+                .stream()
+                .map(Interest::name)
+                .collect(Collectors.toList());
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        UserMapper filter = userFilterRepository
+                .filter(payload, page, size,
+                        user.getLat(), user.getLon(), interests);
+
+        List<UserFilterResponse> resList = filter.getList()
+                .stream()
+                .map(this::toResponseFilter)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(resList, pageable, filter.getCount());
+    }
+
+    private UserFilterResponse toResponseFilter(User user) {
+        UserFilterResponse response = new UserFilterResponse();
+        response.setAge(new Date(new Date().getTime() - user.getBirthDay().getTime()).getYear());
+        response.setId(user.getId());
+        response.setPhoto(new FileForResponse(user.getPhotoId(), myFileService.toOpenUrl(user.getPhoto())));
+        response.setLastName(user.getLastName());
+        response.setFirstName(user.getFirstName());
+        return response;
     }
 }

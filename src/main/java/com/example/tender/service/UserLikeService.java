@@ -4,14 +4,13 @@ import com.example.tender.entity.UserLike;
 import com.example.tender.entity.enums.LikeType;
 import com.example.tender.entity.users.User;
 import com.example.tender.exceptions.ResourceNotFound;
-import com.example.tender.payload.Result;
-import com.example.tender.payload.UserLikePayload;
+import com.example.tender.payload.request.UserLikePayload;
+import com.example.tender.payload.response.Result;
 import com.example.tender.repository.UserLikeRepository;
 import com.example.tender.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @RequiredArgsConstructor

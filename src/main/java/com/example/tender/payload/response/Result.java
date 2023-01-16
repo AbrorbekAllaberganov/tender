@@ -1,4 +1,4 @@
-package com.example.tender.payload;
+package com.example.tender.payload.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

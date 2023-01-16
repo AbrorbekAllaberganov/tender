@@ -1,4 +1,4 @@
-package com.example.tender.payload;
+package com.example.tender.payload.request.user;
 
 import com.example.tender.entity.enums.Language;
 import lombok.AccessLevel;

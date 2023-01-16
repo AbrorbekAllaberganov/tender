@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.tender.entity.MyFile;
 import com.example.tender.exceptions.BadRequest;
-import com.example.tender.payload.Result;
+import com.example.tender.payload.response.Result;
 import com.example.tender.repository.MyFileRepository;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -28,6 +29,9 @@ public class MyFileService {
 
     @Value("${upload}")
     private String downloadPath;
+
+    @Value("${server.name}")
+    private String domainName;
 
 
     public Result save(MultipartFile multipartFile) {
@@ -111,5 +115,11 @@ public class MyFileService {
         return repository.getHashId(pageable);
     }
 
+    public String toOpenUrl(String id) {
+        return domainName.concat("auth/file/preview/").concat(findById(id).getHashId());
+    }
 
+    public String toOpenUrl(@NotNull MyFile file) {
+        return domainName.concat("auth/file/preview/").concat(file.getHashId());
+    }
 }

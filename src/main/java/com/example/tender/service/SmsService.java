@@ -1,27 +1,18 @@
 package com.example.tender.service;
 
 import com.example.tender.entity.ConfirmCode;
-import com.example.tender.entity.users.Parent;
-import com.example.tender.entity.users.User;
 import com.example.tender.json.login.LoginResult;
-import com.example.tender.payload.Result;
+import com.example.tender.payload.response.Result;
 import com.example.tender.repository.ConfirmCodeRepository;
-import com.example.tender.repository.UserRepository;
-import com.example.tender.security.JwtTokenProvider;
 import com.example.tender.security.SmsConstant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

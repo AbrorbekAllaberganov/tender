@@ -1,4 +1,4 @@
-package com.example.tender.payload;
+package com.example.tender.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

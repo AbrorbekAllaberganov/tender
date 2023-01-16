@@ -59,6 +59,7 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
+
         if (token != null && !token.isEmpty()) {
             return token.substring(7);
         }

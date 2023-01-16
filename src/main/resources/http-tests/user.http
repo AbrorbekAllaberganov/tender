@@ -1,3 +1,14 @@
 ###
-PUT http://localhost:8081/api/user/ONLINE
-Authorization: eythsdnchad.asdsad.asdasad.asdaspjifdzxc
+PUT http://localhost:8081/api/user/OFFLINE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTgzMzAwMzA1MjYiLCJyb2xlcyI6W3siaWQiOjEsIm5hbWUiOiJST0xFX1VTRVIiLCJjcmVhdGVkQXQiOjE2NzM4MDMwOTk2ODUsInVwZGF0ZWRBdCI6MTY3MzgwMzA5OTY4NSwiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzM4MDM0OTEsImV4cCI6MTY3Mzg4OTg5MX0.DGbn2YOFR17mEL9k6Kv0C8Sfv4iPRX8IiIOCGE96Kko
+
+
+
+### GET USER INTERESTS
+POST http://localhost:8081/api/user/interests
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTgzMzAwMzA1MjYiLCJyb2xlcyI6W3siaWQiOjEsIm5hbWUiOiJST0xFX1VTRVIiLCJjcmVhdGVkQXQiOjE2NzM4MDMwOTk2ODUsInVwZGF0ZWRBdCI6MTY3MzgwMzA5OTY4NSwiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzM4MDM0OTEsImV4cCI6MTY3Mzg4OTg5MX0.DGbn2YOFR17mEL9k6Kv0C8Sfv4iPRX8IiIOCGE96Kko
+Content-Type: application/json
+
+{
+  "distance": 10
+}

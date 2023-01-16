@@ -9,6 +9,7 @@ import com.example.tender.entity.users.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
@@ -21,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Transactional
     @Query(" update users set status = ?2,lastOnline = ?3 where parent.id = ?1 ")
     void updateStatus(String id, UserStatus status, LocalDateTime lastOnline);
+
+    Optional<User> findByParent_PhoneNumber(String parent_phoneNumber);
 }

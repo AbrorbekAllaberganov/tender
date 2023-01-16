@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import com.example.tender.entity.users.Admin;
 import com.example.tender.entity.users.Parent;
 import com.example.tender.exceptions.ResourceNotFound;
-import com.example.tender.payload.AdminRequest;
-import com.example.tender.payload.Result;
+import com.example.tender.payload.request.AdminRequest;
+import com.example.tender.payload.response.Result;
 import com.example.tender.repository.AdminRepository;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

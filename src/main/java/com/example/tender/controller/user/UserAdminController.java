@@ -1,12 +1,10 @@
 package com.example.tender.controller.user;
 
-import com.example.tender.payload.Result;
+import com.example.tender.payload.response.Result;
 import com.example.tender.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/admin")

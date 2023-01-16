@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.tender.entity.MyFile;
-import com.example.tender.payload.Result;
+import com.example.tender.payload.response.Result;
 import com.example.tender.service.MyFileService;
 
 import java.net.MalformedURLException;
