@@ -203,7 +203,7 @@ public class UserService {
         }
     }
 
-    private User findByPhone(String phone) {
+    public User findByPhone(String phone) {
         return userRepository.findByParent_PhoneNumber(phone).orElseThrow(() -> {
             throw new BadRequest("User not found");
         });

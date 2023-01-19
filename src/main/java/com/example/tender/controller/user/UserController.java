@@ -4,8 +4,10 @@ import com.example.tender.entity.enums.UserStatus;
 import com.example.tender.payload.request.UserLikePayload;
 import com.example.tender.payload.request.user.UserInterestFilterPayload;
 import com.example.tender.payload.request.user.UserPayload;
+import com.example.tender.payload.request.user.UserPostReqDTO;
 import com.example.tender.payload.response.Result;
 import com.example.tender.service.UserLikeService;
+import com.example.tender.service.UserPostService;
 import com.example.tender.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
     private final UserLikeService userLikeService;
-
+    private final UserPostService userPostService;
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Result> editUser(@PathVariable String id,
@@ -70,7 +72,12 @@ public class UserController {
                                            @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("Find interests payload = {}", payload);
         size = size == 0 ? 10 : size;
-        return ResponseEntity.ok(userService.findInterests(payload,size,page));
+        return ResponseEntity.ok(userService.findInterests(payload, size, page));
     }
 
+    @PostMapping("/post")
+    public ResponseEntity<Result> savePosts(@RequestBody UserPostReqDTO payload) {
+        log.info("Save user posts = {}", payload);
+        return ResponseEntity.ok(userPostService.save(payload));
+    }
 }
