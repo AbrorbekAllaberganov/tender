@@ -12,3 +12,22 @@ Content-Type: application/json
 {
   "distance": 5
 }
+
+### SAVE POSTS
+POST http://localhost:8081/api/user/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTgzMzAwMzA1MjYiLCJyb2xlcyI6W3siaWQiOjEsIm5hbWUiOiJST0xFX1VTRVIiLCJjcmVhdGVkQXQiOjE2NzM4MDMwOTk2ODUsInVwZGF0ZWRBdCI6MTY3MzgwMzA5OTY4NSwiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzQxOTY4MTgsImV4cCI6MTY3NDI4MzIxOH0.mWIZhNxxJTP5gUYVVF4aXfWnM3mDZgBK73IwBhV7wac
+Content-Type: application/json
+
+{
+  "photos": ["4028818885b670bc0185b67228100000","4028818885b670bc0185b67228100000"]
+}
+
+
+### EDIT POSTS
+PUT http://localhost:8081/api/user/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTgzMzAwMzA1MjYiLCJyb2xlcyI6W3siaWQiOjEsIm5hbWUiOiJST0xFX1VTRVIiLCJjcmVhdGVkQXQiOjE2NzM4MDMwOTk2ODUsInVwZGF0ZWRBdCI6MTY3MzgwMzA5OTY4NSwiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzQxOTY4MTgsImV4cCI6MTY3NDI4MzIxOH0.mWIZhNxxJTP5gUYVVF4aXfWnM3mDZgBK73IwBhV7wac
+Content-Type: application/json
+
+{
+  "photos": ["4028818a85cde4d30185cde9caa20002"]
+}
