@@ -204,9 +204,9 @@ public class UserService {
     }
 
     public User findByPhone(String phone) {
-        return userRepository.findByParent_PhoneNumber(phone).orElseThrow(() -> {
-            throw new BadRequest("User not found");
-        });
+        return userRepository.findByParent_PhoneNumber(phone).orElseThrow(
+                () -> new BadRequest("User not found")
+        );
     }
 
     public PageImpl<UserFilterResponse> findInterests(UserInterestFilterPayload payload, int size, int page) {

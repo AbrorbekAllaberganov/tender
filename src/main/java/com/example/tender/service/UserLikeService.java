@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserLikeService {
     private final UserLikeRepository userLikeRepository;
     private final UserRepository userRepository;
+    private final ChatService chatService;
 
     public Result saveUserLike(UserLikePayload userLikePayload) {
         try {

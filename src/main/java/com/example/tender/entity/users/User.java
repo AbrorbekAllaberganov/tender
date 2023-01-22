@@ -55,7 +55,6 @@ public class User {
     @Column(name = "photo_id")
     private String photoId;
 
-//    @OneToOne(fetch = FetchType.LAZY)
     @OneToOne
     @JoinColumn(name = "photo_id", insertable = false, updatable = false)
     private MyFile photo;
