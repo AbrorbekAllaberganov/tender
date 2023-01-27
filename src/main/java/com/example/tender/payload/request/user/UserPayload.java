@@ -30,6 +30,8 @@ public class UserPayload {
 
     @NotNull(message = "About required!")
     String aboutMe;
+    @NotNull(message = "Firebase token required!")
+    String firebaseToken;
 
     String photoId;
 

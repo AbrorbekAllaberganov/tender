@@ -99,6 +99,7 @@ public class UserService {
             parent.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
             parentRepository.save(parent);
             user.setLang(userPayload.getLanguage());
+            user.setFirebaseToken(userPayload.getFirebaseToken());
             user.setPhotoId(userPayload.getPhotoId());
             user.setParent(parent);
             user.setFirstName(userPayload.getFirstName());

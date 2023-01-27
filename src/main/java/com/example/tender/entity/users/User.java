@@ -41,6 +41,8 @@ public class User {
 
     @Column(nullable = false)
     String aboutMe;
+    @Column(nullable = false)
+    String firebaseToken;
 
     @Column(nullable = false)
     Date birthDay;
