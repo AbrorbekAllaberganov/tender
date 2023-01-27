@@ -1,6 +1,7 @@
 package com.example.tender.service;
 
 import com.example.tender.entity.enums.Interest;
+import com.example.tender.entity.enums.Language;
 import com.example.tender.entity.enums.UserStatus;
 import com.example.tender.entity.users.Parent;
 import com.example.tender.entity.users.User;
@@ -223,11 +224,17 @@ public class UserService {
                 .map(Interest::name)
                 .collect(Collectors.toList());
 
+        List<String> languages = user.getLanguages()
+                .stream()
+                .map(Language::name)
+                .collect(Collectors.toList());
+
         Pageable pageable = PageRequest.of(page, size);
 
         UserMapper filter = userFilterRepository
                 .filter(payload, page, size,
-                        user.getLat(), user.getLon(), interests);
+                        user.getLat(), user.getLon(), interests,
+                        languages);
 
         List<UserFilterResponse> resList = filter.getList()
                 .stream()

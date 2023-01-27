@@ -27,24 +27,24 @@ public class UserFilterRepository {
 
     public UserMapper filter(UserInterestFilterPayload payload,
                              int page, int size, double lat, double lon,
-                             List<String> interests) {
+                             List<String> interests, List<String> languages) {
         StringBuilder sqlQuery = new StringBuilder();
 
         StringBuilder countQuery =
                 new StringBuilder("select count(*) from users as u " +
                         " inner join users_interests ui on u.id = ui.users_id " +
-                        " where u.status = :status  and ui.interests in (:interests) ");
+                        " where  ui.interests in (:interests) and ul.languages in (:languages) ");
 
         String sql = "select distinct u.* from users as u" +
                 " inner join users_interests ui on u.id = ui.users_id " +
-                " where u.status = :status and ui.interests in (:interests) " +
-                " ";
+                " inner join users_languages ul on u.id = ul.users_id" +
+                " where ui.interests in (:interests) and ul.languages in (:languages) ";
 
         Map<String, Object> param = new HashMap<>();
 
         param.put("interests", interests);
-        param.put("status", UserStatus.ONLINE.name());
-
+        param.put("languages", languages);
+//        param.put("status", UserStatus.ONLINE.name());
 
         sqlQuery.append(sql);
         if (Optional.ofNullable(payload).isPresent()) {
@@ -75,8 +75,8 @@ public class UserFilterRepository {
             }
         }
 
-//        Query query = entityManager.createQuery(sql, UserMapper.class);
-        Query query = entityManager.createNativeQuery(sqlQuery.toString(), User.class);
+        Query query = entityManager.createNativeQuery(sql, User.class);
+//        Query query = entityManager.createNativeQuery(sqlQuery.toString(), User.class);
         Query count = entityManager.createNativeQuery(countQuery.toString());
         param.forEach(query::setParameter);
         param.forEach(count::setParameter);

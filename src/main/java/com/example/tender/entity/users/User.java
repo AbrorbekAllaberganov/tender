@@ -71,6 +71,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     List<Interest> interests;
 
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    List<Language> languages;
+
     @CreationTimestamp
     Date createdAt;
 

@@ -23,49 +23,49 @@ public class ChatService {
 
     public Result saveChat(ChatPayload chatPayload) {
         try {
-            Chat chat=new Chat();
+            Chat chat = new Chat();
             chat.setUser1(findById(chatPayload.getUserId1()));
             chat.setUser2(findById(chatPayload.getUserId2()));
             chatRepository.save(chat);
             return Result.success(chat);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.error(e);
         }
     }
 
-    public Result addMessage(String chatId, Message message){
-        try{
-            Chat chat=chatRepository.findById(chatId).orElseThrow(
-                    ()->new ResourceNotFound("chat","id",chatId)
+    public Result addMessage(String chatId, Message message) {
+        try {
+            Chat chat = chatRepository.findById(chatId).orElseThrow(
+                    () -> new ResourceNotFound("chat", "id", chatId)
             );
-            List<Message> messageList=chat.getMessageList();
+            List<Message> messageList = chat.getMessageList();
             messageList.add(message);
             chat.setMessageList(messageList);
             chatRepository.save(chat);
             return Result.success(chat);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.error(e);
         }
     }
 
-    public User findById(String userId){
+    public User findById(String userId) {
         return userRepository.findById(userId).orElseThrow(
-                ()->new ResourceNotFound("user","id",userId)
+                () -> new ResourceNotFound("user", "id", userId)
         );
     }
 
-    public Result getMessagesByChatId(String chatId){
+    public Result getMessagesByChatId(String chatId) {
         try {
-            Chat chat=chatRepository.findById(chatId).orElseThrow(
-                    ()->new ResourceNotFound("chat","id",chatId)
+            Chat chat = chatRepository.findById(chatId).orElseThrow(
+                    () -> new ResourceNotFound("chat", "id", chatId)
             );
             return Result.success(chat.getMessageList());
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.error(e);
         }
     }
 
-    public Result getUserChats(String userId){
+    public Result getUserChats(String userId) {
         return Result.success(chatRepository.getChatsByUserId(userId));
     }
 
