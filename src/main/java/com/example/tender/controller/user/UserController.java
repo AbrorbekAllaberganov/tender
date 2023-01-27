@@ -91,7 +91,13 @@ public class UserController {
 
     @GetMapping("/post")
     public ResponseEntity<Result> getPosts() {
-        log.info("Get user posts ");
+        log.info("Get current user posts ");
         return ResponseEntity.ok(userPostService.getPosts());
+    }
+
+    @GetMapping("/post/{id}")
+    public ResponseEntity<Result> getPosts(@PathVariable String id) {
+        log.info("Get user posts id={}", id);
+        return ResponseEntity.ok(userPostService.getPostsById(id));
     }
 }

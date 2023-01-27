@@ -127,15 +127,24 @@ public class UserPostService {
 
             User user = userService.findByPhone(currentUser.get());
 
+            return getPostsById(user.getId());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return Result.error(e);
+        }
+    }
+
+    public Result getPostsById(String id) {
+        try {
             List<UserPostEntity> userPostList =
-                    findAllByUserId(user.getId());
+                    findAllByUserId(id);
             List<FileForResponse> responses = userPostList
                     .stream()
                     .map(post -> new FileForResponse(post.getPhotoId(),
                             myFileService.toOpenUrl(post.getPhotoId())))
                     .collect(Collectors.toList());
 
-            return Result.success(new UserPostResponse(user.getId(), responses));
+            return Result.success(new UserPostResponse(id, responses));
         } catch (Exception e) {
             log.error(e.getMessage());
             return Result.error(e);
