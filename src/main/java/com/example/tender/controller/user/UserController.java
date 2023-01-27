@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -80,9 +82,16 @@ public class UserController {
         log.info("Save user posts = {}", payload);
         return ResponseEntity.ok(userPostService.save(payload));
     }
+
     @PutMapping("/post")
     public ResponseEntity<Result> editPosts(@RequestBody UserPostReqDTO payload) {
         log.info("Edit user posts = {}", payload);
         return ResponseEntity.ok(userPostService.edit(payload));
+    }
+
+    @GetMapping("/post")
+    public ResponseEntity<Result> getPosts() {
+        log.info("Get user posts ");
+        return ResponseEntity.ok(userPostService.getPosts());
     }
 }

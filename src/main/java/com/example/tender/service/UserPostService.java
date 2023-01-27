@@ -3,8 +3,10 @@ package com.example.tender.service;
 import com.example.tender.entity.UserPostEntity;
 import com.example.tender.entity.users.User;
 import com.example.tender.exceptions.BadRequest;
+import com.example.tender.payload.detail.FileForResponse;
 import com.example.tender.payload.request.user.UserPostReqDTO;
 import com.example.tender.payload.response.Result;
+import com.example.tender.payload.response.UserPostResponse;
 import com.example.tender.repository.UserPostRepository;
 import com.example.tender.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -116,4 +118,27 @@ public class UserPostService {
         return userPostRepository.findAllByUserId(userId);
     }
 
+    public Result getPosts() {
+        try {
+            Optional<String> currentUser = securityUtils.getCurrentUser();
+
+            if (!currentUser.isPresent())
+                throw new BadRequest("User not found!");
+
+            User user = userService.findByPhone(currentUser.get());
+
+            List<UserPostEntity> userPostList =
+                    findAllByUserId(user.getId());
+            List<FileForResponse> responses = userPostList
+                    .stream()
+                    .map(post -> new FileForResponse(post.getPhotoId(),
+                            myFileService.toOpenUrl(post.getPhotoId())))
+                    .collect(Collectors.toList());
+
+            return Result.success(new UserPostResponse(user.getId(), responses));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return Result.error(e);
+        }
+    }
 }
