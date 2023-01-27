@@ -1,6 +1,7 @@
 package com.example.tender.service;
 
 import com.example.tender.entity.UserPostEntity;
+import com.example.tender.entity.enums.Language;
 import com.example.tender.entity.users.User;
 import com.example.tender.exceptions.BadRequest;
 import com.example.tender.payload.detail.FileForResponse;
@@ -8,6 +9,7 @@ import com.example.tender.payload.request.user.UserPostReqDTO;
 import com.example.tender.payload.response.Result;
 import com.example.tender.payload.response.UserPostResponse;
 import com.example.tender.repository.UserPostRepository;
+import com.example.tender.repository.UserRepository;
 import com.example.tender.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class UserPostService {
+    private final UserRepository userRepository;
 
     private final UserService userService;
     private final MyFileService myFileService;
@@ -145,6 +148,25 @@ public class UserPostService {
                     .collect(Collectors.toList());
 
             return Result.success(new UserPostResponse(id, responses));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return Result.error(e);
+        }
+    }
+
+    public Result editLanguage(List<Language> payload) {
+        try {
+            Optional<String> currentUser = securityUtils.getCurrentUser();
+
+            if (!currentUser.isPresent())
+                throw new BadRequest("User not found!");
+
+            User user = userService.findByPhone(currentUser.get());
+
+            user.setLanguages(payload);
+            userRepository.save(user);
+
+            return Result.success(payload);
         } catch (Exception e) {
             log.error(e.getMessage());
             return Result.error(e);

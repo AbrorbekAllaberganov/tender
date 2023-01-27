@@ -1,5 +1,6 @@
 package com.example.tender.controller.user;
 
+import com.example.tender.entity.enums.Language;
 import com.example.tender.entity.enums.UserStatus;
 import com.example.tender.payload.request.UserLikePayload;
 import com.example.tender.payload.request.user.UserInterestFilterPayload;
@@ -100,4 +101,11 @@ public class UserController {
         log.info("Get user posts id={}", id);
         return ResponseEntity.ok(userPostService.getPostsById(id));
     }
+
+    @PutMapping("/language")
+    public ResponseEntity<Result> editLanguage(@RequestBody List<Language> payload) {
+        log.info("Edit user language = {}", payload);
+        return ResponseEntity.ok(userPostService.editLanguage(payload));
+    }
+
 }
