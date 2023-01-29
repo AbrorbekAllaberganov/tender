@@ -10,6 +10,7 @@ import com.example.tender.payload.response.Result;
 import com.example.tender.service.UserLikeService;
 import com.example.tender.service.UserPostService;
 import com.example.tender.service.UserService;
+import com.example.tender.service.UserStoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserLikeService userLikeService;
+    private final UserStoryService userStoryService;
     private final UserPostService userPostService;
 
     @PutMapping("/edit/{id}")
@@ -108,4 +110,9 @@ public class UserController {
         return ResponseEntity.ok(userPostService.editLanguage(payload));
     }
 
+    @PostMapping("/story/{mediaId}")
+    public ResponseEntity<Result> saveStory(@PathVariable String mediaId) {
+        log.info("Save story mediaId = {}", mediaId);
+        return ResponseEntity.ok(userStoryService.save(mediaId));
+    }
 }
