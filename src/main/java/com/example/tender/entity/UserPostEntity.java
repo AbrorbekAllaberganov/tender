@@ -3,9 +3,12 @@ package com.example.tender.entity;
 import com.example.tender.entity.users.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author 'Mukhtarov Sarvarbek' on 19.01.2023
@@ -36,4 +39,7 @@ public class UserPostEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }

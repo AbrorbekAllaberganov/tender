@@ -4,9 +4,11 @@ import com.example.tender.entity.MyFile;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * @author 'Mukhtarov Sarvarbek' on 28.01.2023
@@ -38,4 +40,10 @@ public class UserStory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+
+    private Boolean isActive = true;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+
 }
