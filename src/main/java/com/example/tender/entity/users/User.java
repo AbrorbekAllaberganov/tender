@@ -1,9 +1,11 @@
 package com.example.tender.entity.users;
 
+import com.example.tender.entity.PlaceEntity;
 import com.example.tender.entity.enums.Interest;
 import com.example.tender.entity.MyFile;
 import com.example.tender.entity.enums.Language;
 import com.example.tender.entity.enums.UserStatus;
+import com.example.tender.entity.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,11 +63,21 @@ public class User {
     @JoinColumn(name = "photo_id", insertable = false, updatable = false)
     private MyFile photo;
 
+    @Column(name = "place_id")
+    private String placeId;
+
+    @OneToOne
+    @JoinColumn(name = "place_id", insertable = false, updatable = false)
+    private PlaceEntity place;
+
     @Enumerated(EnumType.STRING)
     Language lang;
 
     @Enumerated(EnumType.STRING)
     UserStatus status;
+
+    @Enumerated(EnumType.STRING)
+    UserType type;
 
     LocalDateTime lastOnline;
 

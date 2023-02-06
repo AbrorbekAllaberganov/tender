@@ -15,7 +15,7 @@ public class Result {
     private Object data;
     private String exception;
 
-    public Result(String message, boolean success,Exception error) {
+    public Result(String message, boolean success, Exception error) {
         this.message = message;
         this.status = success;
         this.exception = error.getMessage();
@@ -33,22 +33,21 @@ public class Result {
     }
 
 
-    public static Result success(Object data){
-        return new Result("success",true,data);
+    public static Result success(Object data) {
+        return new Result("success", true, data);
     }
 
-    public static Result error(Exception e){
-        return new Result("fail",false,e);
+    public static Result error(Exception e) {
+        return new Result("fail", false, e);
     }
 
-    public static Result error(Exception e,String message){
-        return new Result(message,false,e.getMessage());
+    public static Result error(Exception e, String message) {
+        return new Result(message, false, e.getMessage());
     }
 
-    public static Result message(String message,boolean status){
-        return new Result(message,status);
+    public static Result message(String message, boolean status) {
+        return new Result(message, status);
     }
-
 
 
 }

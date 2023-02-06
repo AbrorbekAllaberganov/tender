@@ -34,8 +34,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginPayload payload) {
         Parent parent = parentRepository.findByPhoneNumber(payload.getPhoneNumber());
-        System.out.println(parent);
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getPhoneNumber(), payload.getPassword()));
+        authenticationManager
+                .authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                payload.getPhoneNumber(),
+                                payload.getPassword())
+                );
         String token = jwtTokenProvider.createToken(parent.getPhoneNumber(), parent.getRoles());
         System.out.println(token);
 

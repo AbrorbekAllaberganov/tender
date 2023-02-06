@@ -1,6 +1,7 @@
 package com.example.tender.payload.request.user;
 
 import com.example.tender.entity.enums.Language;
+import com.example.tender.entity.enums.UserType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,8 @@ public class UserPayload {
     @NotNull(message = "Firebase token required!")
     String firebaseToken;
 
+    String placeId;
+    UserType type;
     String photoId;
 
     Language language;

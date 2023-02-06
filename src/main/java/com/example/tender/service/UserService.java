@@ -98,6 +98,8 @@ public class UserService {
             parent.setPhoneNumber(userPayload.getPhoneNumber());
             parent.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
             parentRepository.save(parent);
+            user.setType(userPayload.getType());
+            user.setPlaceId(userPayload.getPlaceId());
             user.setLang(userPayload.getLanguage());
             user.setFirebaseToken(userPayload.getFirebaseToken());
             user.setPhotoId(userPayload.getPhotoId());
@@ -137,6 +139,8 @@ public class UserService {
             parentRepository.save(parent);
 
             user.setParent(parent);
+            user.setPhotoId(userPayload.getPhotoId());
+            user.setPlaceId(userPayload.getPlaceId());
             user.setFirstName(userPayload.getFirstName());
             user.setLastName(userPayload.getLastName());
             user.setAboutMe(userPayload.getAboutMe());
@@ -146,7 +150,6 @@ public class UserService {
                     userPayload.getInterests().stream()
                             .map(this::getInterest)
                             .collect(Collectors.toList())
-
             );
 
             userRepository.save(user);
