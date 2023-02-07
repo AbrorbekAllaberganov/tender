@@ -28,7 +28,7 @@ public class PlaceEntity {
     String nameUz;
     String nameRu;
     String nameEn;
-
     @Enumerated(EnumType.STRING)
     UserType type;
+    Boolean visible;
 }

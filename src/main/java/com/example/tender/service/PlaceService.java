@@ -33,12 +33,22 @@ public class PlaceService {
         try {
             PlaceEntity entity = new PlaceEntity();
             entity.setType(payload.getType());
+            entity.setVisible(true);
             entity.setNameRu(payload.getNameRu());
             entity.setType(payload.getType());
             entity.setNameEn(payload.getNameEn());
             entity.setNameUz(payload.getNameUz());
             placeRepository.save(entity);
             return Result.success("");
+        } catch (Exception e) {
+            return Result.error(e);
+        }
+    }
+
+    public Result delete(final String id) {
+        try {
+            placeRepository.updateVisible(id, false);
+            return Result.message("Success!", true);
         } catch (Exception e) {
             return Result.error(e);
         }
@@ -56,6 +66,7 @@ public class PlaceService {
             entity.setType(payload.getType());
             entity.setNameEn(payload.getNameEn());
             entity.setNameUz(payload.getNameUz());
+            entity.setVisible(true);
             placeRepository.save(entity);
             return Result.success("");
         } catch (Exception e) {

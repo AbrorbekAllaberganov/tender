@@ -40,4 +40,10 @@ public class PlacesController {
         log.info("Get all place ");
         return ResponseEntity.ok(placeService.findAll(language));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Result> delete(@PathVariable String id) {
+        log.info("Delete place id = {}", id);
+        return ResponseEntity.ok(placeService.delete(id));
+    }
 }
