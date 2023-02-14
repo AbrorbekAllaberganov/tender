@@ -1,6 +1,5 @@
 package com.example.tender.repository.filter;
 
-import com.example.tender.entity.enums.UserStatus;
 import com.example.tender.entity.users.User;
 import com.example.tender.mapper.user.UserMapper;
 import com.example.tender.payload.request.user.UserInterestFilterPayload;
@@ -27,23 +26,30 @@ public class UserFilterRepository {
 
     public UserMapper filter(UserInterestFilterPayload payload,
                              int page, int size, double lat, double lon,
-                             List<String> interests, List<String> languages) {
+                             List<String> interests, List<String> languages, String currentUserId) {
         StringBuilder sqlQuery = new StringBuilder();
 
         StringBuilder countQuery =
                 new StringBuilder("select count(*) from users as u " +
                         " inner join users_interests ui on u.id = ui.users_id " +
-                        " where  ui.interests in (:interests) and ul.languages in (:languages) ");
+                        " where  ui.interests in (:interests) " +
+                        " and ul.languages in (:languages)" +
+                        " and u.id != :currentUserId ");
 
         String sql = "select distinct u.* from users as u" +
                 " inner join users_interests ui on u.id = ui.users_id " +
-                " inner join users_languages ul on u.id = ul.users_id" +
-                " where ui.interests in (:interests) and ul.languages in (:languages) ";
+                " inner join users_languages ul on u.id = ul.users_id " +
+                " where ui.interests in (:interests) " +
+                " and ul.languages in (:languages) " +
+                " and u.id != :currentUserId " +
+                " and u.id not in (select ch.user1_id from chat ch where ch.user2_id = :currentUserId) " +
+                " and u.id not in (select ch.user2_id from chat ch where ch.user1_id = :currentUserId) ";
 
         Map<String, Object> param = new HashMap<>();
 
         param.put("interests", interests);
         param.put("languages", languages);
+        param.put("currentUserId", currentUserId);
 //        param.put("status", UserStatus.ONLINE.name());
 
         sqlQuery.append(sql);

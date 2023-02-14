@@ -75,7 +75,11 @@ public class PlaceService {
     }
 
     public Result findAll(Language language) {
-        return Result.success(placeRepository.findAll().stream().map(e -> toDTO(e, language)).collect(Collectors.toList()));
+        return Result.success(placeRepository
+                .findAll()
+                .stream()
+                .map(e -> toDTO(e, language))
+                .collect(Collectors.toList()));
     }
 
     public PlacesResponse toDTO(PlaceEntity entity, Language lang) {

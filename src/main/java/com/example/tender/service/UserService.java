@@ -238,7 +238,7 @@ public class UserService {
         UserMapper filter = userFilterRepository
                 .filter(payload, page, size,
                         user.getLat(), user.getLon(), interests,
-                        languages);
+                        languages, user.getId());
 
         List<UserFilterResponse> resList = filter.getList()
                 .stream()
