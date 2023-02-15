@@ -31,6 +31,8 @@ public class UserLike {
     @ManyToOne
     User fromUser;
 
+    boolean isActive;
+
     @Enumerated(EnumType.STRING)
     LikeType type;
 
@@ -39,4 +41,11 @@ public class UserLike {
 
     @CreationTimestamp
     Date updatedAt;
+
+    public UserLike(User toUser, User fromUser, boolean isActive, LikeType type) {
+        this.toUser = toUser;
+        this.fromUser = fromUser;
+        this.isActive = isActive;
+        this.type = type;
+    }
 }

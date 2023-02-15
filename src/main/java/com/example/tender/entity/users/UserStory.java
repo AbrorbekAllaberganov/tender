@@ -10,22 +10,16 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * @author 'Mukhtarov Sarvarbek' on 28.01.2023
- * @project tender
- * @contact @sarvargo
- */
+
 @Entity
 @Table(name = "user_story")
 @Getter
 @Setter
 public class UserStory {
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
-
 
     @Column(name = "media_id")
     private String mediaId;
@@ -37,11 +31,12 @@ public class UserStory {
     @Column(name = "user_id")
     private String userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     private Boolean isActive = true;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

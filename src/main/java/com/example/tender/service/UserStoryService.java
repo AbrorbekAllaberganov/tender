@@ -7,20 +7,21 @@ import com.example.tender.exceptions.BadRequest;
 import com.example.tender.payload.detail.FileForResponse;
 import com.example.tender.payload.response.Result;
 import com.example.tender.payload.response.UserStoryResponse;
+import com.example.tender.repository.MessageRepository;
 import com.example.tender.repository.UserRepository;
 import com.example.tender.repository.UserStoryRepository;
 import com.example.tender.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
-/**
- * @author 'Mukhtarov Sarvarbek' on 28.01.2023
- * @project tender
- * @contact @sarvargo
- */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,6 +31,8 @@ public class UserStoryService {
     private final UserService userService;
     private final MyFileService myFileService;
     private final SecurityUtils securityUtils;
+    private final MessageRepository messageRepository;
+
 
     public Result save(final String mediaId) {
         try {
@@ -54,6 +57,20 @@ public class UserStoryService {
         } catch (Exception e) {
             log.error("User story save exception = {}", e.getMessage());
             return Result.error(e, e.getMessage());
+        }
+    }
+
+    @Scheduled(fixedRate = 4000)
+    public void storyRemover(){
+        try {
+            LocalDateTime now = LocalDateTime.now().minusHours(24);
+            List<UserStory> userStoryList=userStoryRepository.findAllByCreatedAtBefore(now);
+            for (UserStory userStory : userStoryList) {
+                messageRepository.updateMessageStoryToNull(userStory.getId());
+            }
+            userStoryRepository.deleteAllByCreatedAtBefore(now);
+        }catch (Exception e){
+            log.error(e.getMessage());
         }
     }
 }

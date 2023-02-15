@@ -58,9 +58,10 @@ public class UserController {
         return ResponseEntity.status(result.isStatus() ? 200 : 400).body(result);
     }
 
-    @PutMapping("/like/{userLikeId}")
-    public ResponseEntity<Result> likeChangeStatus(@PathVariable("userLikeId") String id) {
-        Result result = userLikeService.changeStatus(id);
+    @PutMapping("/like")
+    public ResponseEntity<Result> likeChangeStatus(@RequestParam("userLikeId") String id,
+                                                   @RequestParam("type") String likeType) {
+        Result result = userLikeService.changeStatus(id, likeType);
         return ResponseEntity.status(result.isStatus() ? 200 : 400).body(result);
     }
 
@@ -115,4 +116,5 @@ public class UserController {
         log.info("Save story mediaId = {}", mediaId);
         return ResponseEntity.ok(userStoryService.save(mediaId));
     }
+
 }

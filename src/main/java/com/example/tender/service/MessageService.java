@@ -7,6 +7,7 @@ import com.example.tender.payload.response.Result;
 import com.example.tender.repository.MessageRepository;
 import com.example.tender.repository.UserLikeRepository;
 import com.example.tender.repository.UserRepository;
+import com.example.tender.repository.UserStoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
     private final ChatService chatService;
+    private final UserStoryRepository userStoryRepository;
 
     public Result saveMessage(MessagePayload messagePayload) {
         try {
@@ -28,6 +30,9 @@ public class MessageService {
             message.setFromUser(userRepository.findById(messagePayload.getUserId()).orElseThrow(
                     () -> new ResourceNotFound("user", "id", messagePayload.getUserId())
             ));
+            message.setStory(userStoryRepository.findById(messagePayload.getStoryId()).orElseThrow(
+                    ()->new ResourceNotFound("story","id",messagePayload.getUserId())
+            ));
             messageRepository.save(message);
 
             chatService.addMessage(messagePayload.getChatId(), message);
@@ -37,4 +42,6 @@ public class MessageService {
             return Result.error(e);
         }
     }
+
+
 }

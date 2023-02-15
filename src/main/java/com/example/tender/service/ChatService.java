@@ -9,6 +9,7 @@ import com.example.tender.payload.response.Result;
 import com.example.tender.repository.ChatRepository;
 import com.example.tender.repository.MessageRepository;
 import com.example.tender.repository.UserRepository;
+import com.example.tender.repository.UserStoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatService {
     private final ChatRepository chatRepository;
+
 
     private final UserRepository userRepository;
 

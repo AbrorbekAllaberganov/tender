@@ -12,4 +12,5 @@ public class MessagePayload {
     String replyMessageId;
     String userId;
     String chatId;
+    String storyId;
 }

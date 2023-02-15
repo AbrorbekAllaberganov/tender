@@ -1,8 +1,10 @@
 package com.example.tender.entity.chat;
 
 import com.example.tender.entity.users.User;
+import com.example.tender.entity.users.UserStory;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,6 +32,9 @@ public class Message {
 
     @OneToOne
     User fromUser;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    UserStory story;
 
     @CreationTimestamp
     Date createdAt;
