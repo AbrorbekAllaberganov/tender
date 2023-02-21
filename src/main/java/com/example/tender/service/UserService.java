@@ -1,12 +1,15 @@
 package com.example.tender.service;
 
+import com.example.tender.entity.PlaceEntity;
 import com.example.tender.entity.enums.Interest;
 import com.example.tender.entity.enums.Language;
 import com.example.tender.entity.enums.UserStatus;
+import com.example.tender.entity.enums.UserType;
 import com.example.tender.entity.users.Parent;
 import com.example.tender.entity.users.User;
 import com.example.tender.exceptions.BadRequest;
 import com.example.tender.exceptions.ResourceNotFound;
+import com.example.tender.mapper.user.TopPlaceMapper;
 import com.example.tender.mapper.user.UserMapper;
 import com.example.tender.payload.detail.FileForResponse;
 import com.example.tender.payload.request.user.UserInterestFilterPayload;
@@ -39,10 +42,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+
     private final UserFilterRepository userFilterRepository;
+
     private final PasswordEncoder passwordEncoder;
+
     private final RoleRepository roleRepository;
+
     private final ParentRepository parentRepository;
+
     private final MyFileService myFileService;
 
     private final SecurityUtils securityUtils;
@@ -256,5 +264,9 @@ public class UserService {
         response.setLastName(user.getLastName());
         response.setFirstName(user.getFirstName());
         return response;
+    }
+
+    public Optional<TopPlaceMapper> findTopPlace(UserType type) {
+        return userRepository.findTopPlace(type.name());
     }
 }

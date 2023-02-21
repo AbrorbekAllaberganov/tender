@@ -36,7 +36,7 @@ public class PlacesController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Result> findAll(@RequestParam("lang") Language language) {
+    public ResponseEntity<Result> findAll(@RequestParam(value = "lang", defaultValue = "uz") Language language) {
         log.info("Get all place ");
         return ResponseEntity.ok(placeService.findAll(language));
     }
@@ -45,5 +45,12 @@ public class PlacesController {
     public ResponseEntity<Result> delete(@PathVariable String id) {
         log.info("Delete place id = {}", id);
         return ResponseEntity.ok(placeService.delete(id));
+    }
+
+    @GetMapping("/top")
+    public ResponseEntity<Result> findTop(@RequestParam(value = "lang", defaultValue = "uz") Language language) {
+        log.info("Get top places");
+        Result top = placeService.findTop(language);
+        return ResponseEntity.status(top.isStatus() ? 200 : 400).body(top);
     }
 }

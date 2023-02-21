@@ -2,6 +2,7 @@ package com.example.tender.controller.user;
 
 import com.example.tender.entity.enums.Language;
 import com.example.tender.entity.enums.UserStatus;
+import com.example.tender.entity.enums.UserType;
 import com.example.tender.payload.request.UserLikePayload;
 import com.example.tender.payload.request.user.UserInterestFilterPayload;
 import com.example.tender.payload.request.user.UserPayload;
