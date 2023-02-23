@@ -73,6 +73,13 @@ public class UserController {
     }
 
 
+    @GetMapping("/like-rating")
+    public ResponseEntity<Result> findRatingByLike() {
+        Result result = userLikeService.findRatingBoysAndGirlsByLike();
+        return ResponseEntity.status(result.isStatus() ? 200 : 400).body(result);
+    }
+
+
     @PostMapping("/interests")
     public ResponseEntity<?> findInterests(@RequestBody UserInterestFilterPayload payload,
                                            @RequestParam(value = "page", defaultValue = "0") int page,

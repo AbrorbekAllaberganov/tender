@@ -6,12 +6,18 @@ import com.example.tender.entity.users.User;
 import com.example.tender.exceptions.BadRequest;
 import com.example.tender.exceptions.ResourceNotFound;
 import com.example.tender.payload.request.UserLikePayload;
+import com.example.tender.payload.response.LikeRatingResDTO;
 import com.example.tender.payload.response.Result;
+import com.example.tender.payload.response.UserShortInfoResDTO;
 import com.example.tender.repository.UserLikeRepository;
 import com.example.tender.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class UserLikeService {
     private final UserLikeRepository userLikeRepository;
     private final UserRepository userRepository;
+    private final MyFileService myFileService;
 
     public LikeType getLikeType(String like) {
         switch (like) {
@@ -56,8 +63,7 @@ public class UserLikeService {
     public Result changeStatus(String userLikeId, String like) {
         try {
             UserLike userLike = userLikeRepository.findById(userLikeId).orElseThrow(
-                    () -> new ResourceNotFound("userLike", "id", userLikeId)
-            );
+                    () -> new ResourceNotFound("userLike", "id", userLikeId));
             userLike.setActive(false);
             if (like.equals("LIKE")) {
                 userLikeRepository.save(new UserLike(userLike.getFromUser(), userLike.getToUser(), false, LikeType.SUPER_LIKE));
@@ -79,4 +85,31 @@ public class UserLikeService {
                 () -> new ResourceNotFound("user", "id", userId)
         );
     }
+
+    public Result findRatingBoysAndGirlsByLike() {
+
+        List<UserShortInfoResDTO> boys = userLikeRepository
+                .findRatingByLike(true)
+                .stream()
+                .map(mapper -> {
+                    UserShortInfoResDTO dto = UserShortInfoResDTO.toDTO(mapper);
+                    dto.setPhotoUrl(myFileService.toOpenUrl(mapper.getPhotoId()));
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        List<UserShortInfoResDTO> girls = userLikeRepository
+                .findRatingByLike(false)
+                .stream()
+                .map(mapper -> {
+                    UserShortInfoResDTO dto = UserShortInfoResDTO.toDTO(mapper);
+                    dto.setPhotoUrl(myFileService.toOpenUrl(mapper.getPhotoId()));
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return Result.success(new LikeRatingResDTO(boys, girls));
+    }
+
+
 }
