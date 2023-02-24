@@ -76,44 +76,44 @@ public class UserController {
     public ResponseEntity<?> findInterests(@RequestBody UserInterestFilterPayload payload,
                                            @RequestParam(value = "page", defaultValue = "0") int page,
                                            @RequestParam(value = "size", defaultValue = "10") int size) {
-        log.info("Find interests payload = {}", payload);
+//        log.info("Find interests payload = {}", payload);
         size = size == 0 ? 10 : size;
         return ResponseEntity.ok(userService.findInterests(payload, size, page));
     }
 
     @PostMapping("/post")
     public ResponseEntity<Result> savePosts(@RequestBody UserPostReqDTO payload) {
-        log.info("Save user posts = {}", payload);
+//        log.info("Save user posts = {}", payload);
         return ResponseEntity.ok(userPostService.save(payload));
     }
 
     @PutMapping("/post")
     public ResponseEntity<Result> editPosts(@RequestBody UserPostReqDTO payload) {
-        log.info("Edit user posts = {}", payload);
+//        log.info("Edit user posts = {}", payload);
         return ResponseEntity.ok(userPostService.edit(payload));
     }
 
     @GetMapping("/post")
     public ResponseEntity<Result> getPosts() {
-        log.info("Get current user posts ");
+//        log.info("Get current user posts ");
         return ResponseEntity.ok(userPostService.getPosts());
     }
 
     @GetMapping("/post/{id}")
     public ResponseEntity<Result> getPosts(@PathVariable String id) {
-        log.info("Get user posts id={}", id);
+//        log.info("Get user posts id={}", id);
         return ResponseEntity.ok(userPostService.getPostsById(id));
     }
 
     @PutMapping("/language")
     public ResponseEntity<Result> editLanguage(@RequestBody List<Language> payload) {
-        log.info("Edit user language = {}", payload);
+//        log.info("Edit user language = {}", payload);
         return ResponseEntity.ok(userPostService.editLanguage(payload));
     }
 
     @PostMapping("/story/{mediaId}")
     public ResponseEntity<Result> saveStory(@PathVariable String mediaId) {
-        log.info("Save story mediaId = {}", mediaId);
+//        log.info("Save story mediaId = {}", mediaId);
         return ResponseEntity.ok(userStoryService.save(mediaId));
     }
 
