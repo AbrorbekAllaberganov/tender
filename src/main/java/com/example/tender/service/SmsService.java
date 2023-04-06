@@ -16,6 +16,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,22 +66,45 @@ public class SmsService {
     }
 
     public Result sendSms(String phoneNumber) {
-        String url = "https://notify.eskiz.uz/api/message/sms/send";
         String code = GetPassword();
-        RestTemplate restTemplate = new RestTemplate();
-        Map<String, String> params = new HashMap<>();
-        params.put("mobile_phone", phoneNumber);
-        params.put("message", "Kod : " + code);
-        params.put("from", "4546");
-        params.put("callback_url", "http://0000.uz/test.php");
+        try {
+            String data = "{"
+                    + "\"send\":\"\","
+                    + "\"number\":\"" + phoneNumber + "\","
+                    + "\"text\":\"" + code + "\","
+                    + "\"token\":\"tDeMaUxHQEnOKfqoyAVPvXZNFpidJkhgTYGuILbRBsjmSrl\","
+                    + "\"id\":267,"
+                    + "\"user_id\":\"666771575\""
+                    + "}";
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(SmsConstant.getToken());
+            String baseUrl = "https://api.xssh.uz/smsv1/";
+            String encodedData = URLEncoder.encode(data, String.valueOf(StandardCharsets.UTF_8));
+            String url = baseUrl + "?data=" + encodedData;
 
-        HttpEntity<?> req = new HttpEntity<>(params, headers);
-        System.out.println(code);
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
 
-//        ResponseEntity<String> res = restTemplate.postForEntity(url, req, String.class);
+            con.setDoOutput(true);
+            OutputStream os = con.getOutputStream();
+            os.write(data.getBytes());
+            os.flush();
+            os.close();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            System.out.println(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             if (confirmCodeRepository.findByPhoneNumber(phoneNumber) != null)
                 confirmCodeRepository.delete(confirmCodeRepository.findByPhoneNumber(phoneNumber));

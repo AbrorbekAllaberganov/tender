@@ -45,9 +45,7 @@ public class IdeaService {
     }
 
     public IdeaEntity findById(String id) {
-        return ideaRepository.findById(id).orElseThrow(() -> {
-            throw new BadRequest("Idea not found!");
-        });
+        return ideaRepository.findById(id).orElseThrow(() -> new BadRequest("Idea not found!"));
     }
 
     public Result update(IdeaRequestPayload ideaPayload, String id) {
